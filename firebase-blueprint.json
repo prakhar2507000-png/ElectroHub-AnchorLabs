@@ -1,0 +1,50 @@
+{
+  "entities": {
+    "Project": {
+      "title": "Project",
+      "description": "Hardware blueprints and assembly instructions.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "authorId": { "type": "string" },
+        "authorEmail": { "type": "string" },
+        "difficulty": { "type": "string", "enum": ["Beginner", "Intermediate", "Advanced"] },
+        "xpReward": { "type": "number" },
+        "bom": { "type": "array" },
+        "steps": { "type": "array" },
+        "imageUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "authorId", "xpReward"]
+    },
+    "Build": {
+      "title": "Build",
+      "description": "User submission of a physical implementation of a project.",
+      "type": "object",
+      "properties": {
+        "projectId": { "type": "string" },
+        "userId": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "submissionImageUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "qualityScore": { "type": "number" },
+        "xpAwarded": { "type": "number" },
+        "feedback": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "evaluatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["projectId", "userId", "submissionImageUrl", "status"]
+    }
+  },
+  "firestore": {
+    "/projects/{projectId}": {
+      "schema": "Project",
+      "description": "Collection of available hardware projects."
+    },
+    "/builds/{buildId}": {
+      "schema": "Build",
+      "description": "User build submissions."
+    }
+  }
+}
